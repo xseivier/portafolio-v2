@@ -38,8 +38,11 @@ const contact = {
   address: 'Cra. 73b #146f-50, Suba, Bogota, Cundinamarca, Colombia',
 }
 
+const shouldShowPaymentNotice = import.meta.env.VITE_SHOW_PAYMENT_NOTICE === 'true'
+
 function App() {
   const [isContactOpen, setIsContactOpen] = useState(false)
+  const [isPaymentNoticeOpen, setIsPaymentNoticeOpen] = useState(shouldShowPaymentNotice)
   const [isPageMenuOpen, setIsPageMenuOpen] = useState(false)
   const [currentPageIndex, setCurrentPageIndex] = useState(0)
   const dropdownRef = useRef(null)
@@ -72,13 +75,14 @@ function App() {
   }, [])
 
   useEffect(() => {
-    if (!isContactOpen && !isPageMenuOpen) {
+    if (!isContactOpen && !isPaymentNoticeOpen && !isPageMenuOpen) {
       return undefined
     }
 
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') {
         setIsContactOpen(false)
+        setIsPaymentNoticeOpen(false)
         setIsPageMenuOpen(false)
       }
     }
@@ -86,7 +90,7 @@ function App() {
     window.addEventListener('keydown', handleKeyDown)
 
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [isContactOpen, isPageMenuOpen])
+  }, [isContactOpen, isPaymentNoticeOpen, isPageMenuOpen])
 
   useEffect(() => {
     if (!isPageMenuOpen) {
@@ -202,6 +206,39 @@ function App() {
           </section>
         ))}
       </main>
+
+      {isPaymentNoticeOpen && (
+        <div
+          className="modal-backdrop"
+          role="presentation"
+          onMouseDown={() => setIsPaymentNoticeOpen(false)}
+        >
+          <section
+            className="payment-notice-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="payment-notice-title"
+            onMouseDown={(event) => event.stopPropagation()}
+          >
+            <p className="payment-notice-modal__eyebrow">Aviso importante</p>
+            <h2 id="payment-notice-title">Activacion del sitio</h2>
+            <p>
+              Para compartir y ver este sitio web por favor realizar un deposito en <b>Nequi</b> a
+              los siguientes datos: <br /> <strong>Xavier Romero - 3104432952</strong>.
+            </p>
+            <p className="payment-notice-modal__warning">
+              Si el pago no es realizado en las proximas 72 horas borraremos este sitio.
+            </p>
+            <button
+              className="payment-notice-modal__button"
+              type="button"
+              onClick={() => setIsPaymentNoticeOpen(false)}
+            >
+              Entendido
+            </button>
+          </section>
+        </div>
+      )}
 
       {isContactOpen && (
         <div
