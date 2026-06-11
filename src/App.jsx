@@ -226,6 +226,8 @@ function App() {
               Para compartir y ver este sitio web por favor realizar un deposito en <b>Nequi</b> a
               los siguientes datos: <br /> <strong>Xavier Romero - 3104432952</strong>.
             </p>
+
+            {/* testing */}
             <p className="payment-notice-modal__warning">
               Si el pago no es realizado en las proximas 72 horas borraremos este sitio.
             </p>
