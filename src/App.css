@@ -17,7 +17,7 @@
   gap: 24px;
   padding: 14px clamp(16px, 4vw, 48px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  background: #050505;
+  background: rgba(5, 5, 5, 0.92);
   color: #fff;
 }
 
@@ -72,6 +72,46 @@
 
 .page-select__control {
   min-width: 172px;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.topbar-social-link {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  color: #fff;
+  font-size: 1.28rem;
+  text-decoration: none;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.topbar-social-link:hover,
+.topbar-social-link:focus-visible {
+  border-color: rgba(255, 255, 255, 0.44);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 12px 28px rgba(0, 0, 0, 0.36);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.topbar-social-link--whatsapp {
+  background: #25d366;
+}
+
+.topbar-social-link--instagram {
+  background: linear-gradient(135deg, #feda75 0%, #fa7e1e 24%, #d62976 52%, #962fbf 76%, #4f5bd5 100%);
 }
 
 .page-select__control:hover,
@@ -234,7 +274,10 @@
   overscroll-behavior-y: contain;
   scroll-behavior: smooth;
   scrollbar-width: none;
-  background: #000;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.24), rgba(0, 0, 0, 0.48)),
+    var(--background-texture) center / cover fixed,
+    #000;
 }
 
 .app::-webkit-scrollbar {
@@ -245,7 +288,7 @@
   position: relative;
   display: grid;
   place-items: center;
-  background: #000;
+  background: transparent;
   scroll-margin-top: 0;
 }
 
@@ -332,7 +375,9 @@
 
 .contact-list a {
   display: grid;
-  gap: 6px;
+  grid-template-columns: 44px 1fr;
+  align-items: center;
+  gap: 14px;
   padding: 16px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 18px;
@@ -341,20 +386,80 @@
   text-decoration: none;
   transition:
     background 180ms ease,
-    border-color 180ms ease;
+    border-color 180ms ease,
+    transform 180ms ease;
 }
 
-.contact-list a:hover {
+.contact-list a:hover,
+.contact-list a:focus-visible {
   border-color: rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.08);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.contact-list a.contact-list__link--whatsapp {
+  border-color: rgba(37, 211, 102, 0.28);
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+}
+
+.contact-list a.contact-list__link--whatsapp:hover,
+.contact-list a.contact-list__link--whatsapp:focus-visible {
+  border-color: rgba(37, 211, 102, 0.42);
   background: rgba(255, 255, 255, 0.08);
 }
 
-.contact-list span,
-.contact-list small {
-  color: rgba(255, 255, 255, 0.52);
+.contact-list a.contact-list__link--instagram {
+  border-color: rgba(225, 48, 108, 0.28);
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
 }
 
-.contact-list span {
+.contact-list a.contact-list__link--instagram:hover,
+.contact-list a.contact-list__link--instagram:focus-visible {
+  border-color: rgba(225, 48, 108, 0.42);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.contact-list__icon {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-size: 1.55rem;
+}
+
+.contact-list__link--whatsapp .contact-list__icon {
+  border-color: rgba(37, 211, 102, 0.55);
+  background: #25d366;
+  color: #fff;
+}
+
+.contact-list__link--instagram .contact-list__icon {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: linear-gradient(135deg, #feda75 0%, #fa7e1e 24%, #d62976 52%, #962fbf 76%, #4f5bd5 100%);
+  color: #fff;
+}
+
+.contact-list__link--whatsapp .contact-list__label,
+.contact-list__link--instagram .contact-list__label,
+.contact-list__link--whatsapp small,
+.contact-list__link--instagram small {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.contact-list__content {
+  display: grid;
+  gap: 4px;
+}
+
+.contact-list__label {
+  color: rgba(255, 255, 255, 0.52);
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -362,6 +467,7 @@
 }
 
 .contact-list small {
+  color: rgba(255, 255, 255, 0.52);
   font-size: 0.85rem;
   line-height: 1.4;
 }
@@ -382,6 +488,16 @@
 
   .page-select__control {
     min-width: 146px;
+  }
+
+  .topbar-actions {
+    gap: 8px;
+  }
+
+  .topbar-social-link {
+    width: 38px;
+    height: 38px;
+    font-size: 1.18rem;
   }
 
   .page-select__trigger {

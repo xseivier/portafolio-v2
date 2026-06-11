@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { FaEnvelope, FaInstagram, FaMapMarkerAlt, FaWhatsapp } from 'react-icons/fa'
 import './App.css'
 
 const sectionNames = [
@@ -29,9 +30,11 @@ const pages = sectionNames.map((sectionName, index) => {
 })
 
 const contact = {
-  name: 'Angel Miguel Melo Ramos',
+  name: 'Angel Ramos',
   email: 'angelmiguelsk8@gmail.com',
   phone: '3227080986',
+  instagram: '@unangeldirector',
+  instagramUrl: 'https://www.instagram.com/unangeldirector/',
   address: 'Cra. 73b #146f-50, Suba, Bogota, Cundinamarca, Colombia',
 }
 
@@ -144,13 +147,33 @@ function App() {
           )}
         </div>
 
-        <button
-          className="contact-button"
-          type="button"
-          onClick={() => setIsContactOpen(true)}
-        >
-          Contactame
-        </button>
+        <div className="topbar-actions">
+          <a
+            className="topbar-social-link topbar-social-link--whatsapp"
+            href={`https://wa.me/57${contact.phone}`}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Abrir WhatsApp"
+          >
+            <FaWhatsapp />
+          </a>
+          <a
+            className="topbar-social-link topbar-social-link--instagram"
+            href={contact.instagramUrl}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={`Abrir Instagram ${contact.instagram}`}
+          >
+            <FaInstagram />
+          </a>
+          <button
+            className="contact-button"
+            type="button"
+            onClick={() => setIsContactOpen(true)}
+          >
+            Contactame
+          </button>
+        </div>
       </header>
 
       <main className="app">
@@ -207,12 +230,41 @@ function App() {
 
             <div className="contact-list">
               <a href={`mailto:${contact.email}`}>
-                <span>Correo</span>
-                {contact.email}
+                <span className="contact-list__icon" aria-hidden="true">
+                  <FaEnvelope />
+                </span>
+                <span className="contact-list__content">
+                  <span className="contact-list__label">Correo</span>
+                  {contact.email}
+                </span>
               </a>
-              <a href={`tel:+57${contact.phone}`}>
-                <span>Numero</span>
-                +57 {contact.phone}
+              <a
+                className="contact-list__link--whatsapp"
+                href={`https://wa.me/57${contact.phone}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span className="contact-list__icon" aria-hidden="true">
+                  <FaWhatsapp />
+                </span>
+                <span className="contact-list__content">
+                  <span className="contact-list__label">WhatsApp</span>
+                  +57 {contact.phone}
+                </span>
+              </a>
+              <a
+                className="contact-list__link--instagram"
+                href={contact.instagramUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span className="contact-list__icon" aria-hidden="true">
+                  <FaInstagram />
+                </span>
+                <span className="contact-list__content">
+                  <span className="contact-list__label">Instagram</span>
+                  {contact.instagram}
+                </span>
               </a>
               <a
                 href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
@@ -221,9 +273,14 @@ function App() {
                 target="_blank"
                 rel="noreferrer"
               >
-                <span>Direccion</span>
-                Colombia, Bogota, Suba
-                <small>{contact.address}</small>
+                <span className="contact-list__icon" aria-hidden="true">
+                  <FaMapMarkerAlt />
+                </span>
+                <span className="contact-list__content">
+                  <span className="contact-list__label">Direccion</span>
+                  Colombia, Bogota, Suba
+                  <small>{contact.address}</small>
+                </span>
               </a>
             </div>
           </section>
