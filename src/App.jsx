@@ -236,7 +236,7 @@ function App() {
             <h2 id="payment-notice-title">Activacion del sitio</h2>
             <p>
               Para compartir y ver este sitio web por favor realizar un deposito
-              en <b>Nequi</b>{" "}
+              en Nequi{" "}
               <b>
                 <i>con lo que te salga del corazon</i>
               </b>{" "}
