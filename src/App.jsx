@@ -1,118 +1,126 @@
-import { useEffect, useRef, useState } from 'react'
-import { FaEnvelope, FaInstagram, FaMapMarkerAlt, FaWhatsapp } from 'react-icons/fa'
-import './App.css'
+import { useEffect, useRef, useState } from "react";
+import {
+  FaEnvelope,
+  FaInstagram,
+  FaMapMarkerAlt,
+  FaWhatsapp,
+} from "react-icons/fa";
+import "./App.css";
 
 const sectionNames = [
-  'Yo',
-  'Sobre mi',
-  'Servicios',
-  'Algo de mi trabajo',
-  'Fotos gastronomica',
-  'Fotos mascotas',
-  'Pasion sobre ruedas',
-  'Sesion para cumple',
-  'Mockups + foticos',
-  'Motion graphics',
-  'Reels + animacion',
-  'Efectos/podcast',
-  '+ reels',
-  'Letterings',
-]
+  "Yo",
+  "Sobre mi",
+  "Servicios",
+  "Algo de mi trabajo",
+  "Fotos gastronomica",
+  "Fotos mascotas",
+  "Pasion sobre ruedas",
+  "Sesion para cumple",
+  "Mockups + foticos",
+  "Motion graphics",
+  "Reels + animacion",
+  "Efectos/podcast",
+  "+ reels",
+  "Letterings",
+];
 
 const pages = sectionNames.map((sectionName, index) => {
-  const pageNumber = index + 1
+  const pageNumber = index + 1;
 
   return {
     id: `seccion-${pageNumber}`,
     label: sectionName,
     src: `/pagina${pageNumber}.mp4`,
-  }
-})
+  };
+});
 
 const contact = {
-  name: 'Angel Ramos',
-  email: 'angelmiguelsk8@gmail.com',
-  phone: '3227080986',
-  instagram: '@unangeldirector',
-  instagramUrl: 'https://www.instagram.com/unangeldirector/',
-  address: 'Cra. 73b #146f-50, Suba, Bogota, Cundinamarca, Colombia',
-}
+  name: "Angel Ramos",
+  email: "angelmiguelsk8@gmail.com",
+  phone: "3227080986",
+  instagram: "@unangeldirector",
+  instagramUrl: "https://www.instagram.com/unangeldirector/",
+  address: "Cra. 73b #146f-50, Suba, Bogota, Cundinamarca, Colombia",
+};
 
-const shouldShowPaymentNotice = import.meta.env.VITE_SHOW_PAYMENT_NOTICE === 'true'
+const shouldShowPaymentNotice =
+  import.meta.env.VITE_SHOW_PAYMENT_NOTICE === "true";
 
 function App() {
-  const [isContactOpen, setIsContactOpen] = useState(false)
-  const [isPaymentNoticeOpen, setIsPaymentNoticeOpen] = useState(shouldShowPaymentNotice)
-  const [isPageMenuOpen, setIsPageMenuOpen] = useState(false)
-  const [currentPageIndex, setCurrentPageIndex] = useState(0)
-  const dropdownRef = useRef(null)
-  const videoRefs = useRef([])
-  const pageRefs = useRef([])
+  const [isContactOpen, setIsContactOpen] = useState(false);
+  const [isPaymentNoticeOpen, setIsPaymentNoticeOpen] = useState(
+    shouldShowPaymentNotice,
+  );
+  const [isPageMenuOpen, setIsPageMenuOpen] = useState(false);
+  const [currentPageIndex, setCurrentPageIndex] = useState(0);
+  const dropdownRef = useRef(null);
+  const videoRefs = useRef([]);
+  const pageRefs = useRef([]);
 
   useEffect(() => {
-    const videos = videoRefs.current.filter(Boolean)
+    const videos = videoRefs.current.filter(Boolean);
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          const video = entry.target
+          const video = entry.target;
 
           if (entry.isIntersecting) {
-            setCurrentPageIndex(videos.indexOf(video))
-            video.play().catch(() => {})
-            return
+            setCurrentPageIndex(videos.indexOf(video));
+            video.play().catch(() => {});
+            return;
           }
 
-          video.pause()
-        })
+          video.pause();
+        });
       },
       { threshold: 0.65 },
-    )
+    );
 
-    videos.forEach((video) => observer.observe(video))
+    videos.forEach((video) => observer.observe(video));
 
-    return () => observer.disconnect()
-  }, [])
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     if (!isContactOpen && !isPaymentNoticeOpen && !isPageMenuOpen) {
-      return undefined
+      return undefined;
     }
 
     const handleKeyDown = (event) => {
-      if (event.key === 'Escape') {
-        setIsContactOpen(false)
-        setIsPaymentNoticeOpen(false)
-        setIsPageMenuOpen(false)
+      if (event.key === "Escape") {
+        setIsContactOpen(false);
+        setIsPaymentNoticeOpen(false);
+        setIsPageMenuOpen(false);
       }
-    }
+    };
 
-    window.addEventListener('keydown', handleKeyDown)
+    window.addEventListener("keydown", handleKeyDown);
 
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [isContactOpen, isPaymentNoticeOpen, isPageMenuOpen])
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isContactOpen, isPaymentNoticeOpen, isPageMenuOpen]);
 
   useEffect(() => {
     if (!isPageMenuOpen) {
-      return undefined
+      return undefined;
     }
 
     const handlePointerDown = (event) => {
       if (!dropdownRef.current?.contains(event.target)) {
-        setIsPageMenuOpen(false)
+        setIsPageMenuOpen(false);
       }
-    }
+    };
 
-    window.addEventListener('pointerdown', handlePointerDown)
+    window.addEventListener("pointerdown", handlePointerDown);
 
-    return () => window.removeEventListener('pointerdown', handlePointerDown)
-  }, [isPageMenuOpen])
+    return () => window.removeEventListener("pointerdown", handlePointerDown);
+  }, [isPageMenuOpen]);
 
   const handlePageSelect = (pageIndex) => {
-    setCurrentPageIndex(pageIndex)
-    setIsPageMenuOpen(false)
-    pageRefs.current[pageIndex]?.scrollIntoView({ behavior: 'smooth' })
-  }
+    setCurrentPageIndex(pageIndex);
+    setIsPageMenuOpen(false);
+    pageRefs.current[pageIndex]?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <>
@@ -133,7 +141,11 @@ function App() {
           </div>
 
           {isPageMenuOpen && (
-            <div className="page-select__menu" role="listbox" aria-label="Secciones">
+            <div
+              className="page-select__menu"
+              role="listbox"
+              aria-label="Secciones"
+            >
               {pages.map((page, index) => (
                 <button
                   className="page-select__option"
@@ -143,7 +155,7 @@ function App() {
                   aria-selected={currentPageIndex === index}
                   onClick={() => handlePageSelect(index)}
                 >
-                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
                   {page.label}
                 </button>
               ))}
@@ -186,13 +198,13 @@ function App() {
             className="video-page"
             key={page.id}
             ref={(element) => {
-              pageRefs.current[index] = element
+              pageRefs.current[index] = element;
             }}
             aria-label={page.label}
           >
             <video
               ref={(element) => {
-                videoRefs.current[index] = element
+                videoRefs.current[index] = element;
               }}
               className="video-page__media"
               src={page.src}
@@ -201,7 +213,7 @@ function App() {
               playsInline
               disablePictureInPicture
               controlsList="nodownload nofullscreen noplaybackrate"
-              preload={index === 0 ? 'auto' : 'metadata'}
+              preload={index === 0 ? "auto" : "metadata"}
             />
           </section>
         ))}
@@ -223,13 +235,20 @@ function App() {
             <p className="payment-notice-modal__eyebrow">Aviso importante</p>
             <h2 id="payment-notice-title">Activacion del sitio</h2>
             <p>
-              Para compartir y ver este sitio web por favor realizar un deposito en <b>Nequi</b> a
-              los siguientes datos: <br /> <strong>Xavier Romero - 3104432952</strong>.
+              Para compartir y ver este sitio web por favor realizar un deposito
+              en <b>Nequi</b>{" "}
+              <b>
+                <i>con lo que te salga del corazon</i>
+              </b>{" "}
+              a los siguientes datos: <br />{" "}
+              <strong>Xavier Romero - 3104432952</strong>.
             </p>
+            <p></p>
 
             {/* testing */}
             <p className="payment-notice-modal__warning">
-              Si el pago no es realizado en las proximas 72 horas borraremos este sitio.
+              Si el pago no es realizado en las proximas 72 horas borraremos
+              este sitio.
             </p>
             <button
               className="payment-notice-modal__button"
@@ -326,7 +345,7 @@ function App() {
         </div>
       )}
     </>
-  )
+  );
 }
 
-export default App
+export default App;
